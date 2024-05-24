@@ -6,6 +6,7 @@ import com.hakkinenT.selfreference.entities.Person;
 public class PersonFactory {
     public static Person createPerson(String name){
         Person person = new Person();
+        person.setId(1L);
         person.setName(name);
         return person;
     }
