@@ -12,11 +12,18 @@ public class PersonFactory {
     }
 
     public static Person createPerson(String name, String partnerName){
-        Person partner = createPerson(partnerName);
+        Person partner = createPartner(partnerName);
         Person person = createPerson(name);
         person.setPartner(partner);
 
         return person;
+    }
+
+    private static Person createPartner(String name){
+        Person partner = createPerson(name);
+        partner.setId(2L);
+
+        return partner;
     }
 
     public static PersonDTO createPersonDTO(String name){
