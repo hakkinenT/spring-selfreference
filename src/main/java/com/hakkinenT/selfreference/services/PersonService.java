@@ -16,6 +16,7 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Transactional
     public PersonDTO insert(PersonDTO dto){
         Person person = new Person();
         person.setName(dto.getName());
