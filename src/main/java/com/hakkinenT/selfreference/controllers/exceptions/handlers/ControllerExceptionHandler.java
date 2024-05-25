@@ -1,6 +1,7 @@
 package com.hakkinenT.selfreference.controllers.exceptions.handlers;
 
 import com.hakkinenT.selfreference.controllers.exceptions.dto.StandardError;
+import com.hakkinenT.selfreference.services.exceptions.DatabaseException;
 import com.hakkinenT.selfreference.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,8 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<StandardError> database(ResourceNotFoundException e, HttpServletRequest request){
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request){
         HttpStatus status = HttpStatus.BAD_REQUEST;
 
         StandardError err = new StandardError();
