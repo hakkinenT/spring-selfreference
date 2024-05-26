@@ -12,7 +12,7 @@ public class Person {
     private Long id;
     private String name;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "partner_id")
     private Person partner;
 

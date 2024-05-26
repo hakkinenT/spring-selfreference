@@ -24,10 +24,12 @@ public class PersonService {
         Person person = new Person();
         person.setName(dto.getName());
 
-        Person partner = new Person();
-        partner.setName(dto.getPartner().getName());
 
-        person.setPartner(partner);
+       if(dto.getPartner() != null){
+           Person partner = personRepository.getReferenceById(dto.getPartner().getId());
+           person.setPartner(partner);
+
+       }
 
         person = personRepository.save(person);
 
@@ -60,15 +62,17 @@ public class PersonService {
         return person.stream().map(PersonDTO::new).toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<PersonDTO> findAllPartners(){
+        List<Person> person = personRepository.searchAllPartners();
+        return person.stream().map(PersonDTO::new).toList();
+    }
+
     @Transactional
     public PersonDTO update(Long id, PersonDTO dto){
         try{
             Person person = personRepository.getReferenceById(id);
             person.setName(dto.getName());
-
-            Person partner = new Person();
-            partner.setName(dto.getPartner().getName());
-            person.setPartner(partner);
 
             person = personRepository.save(person);
             return new PersonDTO(person);

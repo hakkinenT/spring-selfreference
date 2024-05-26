@@ -38,7 +38,6 @@ public class PersonServiceTests {
     private Long dependentId;
 
     private Long existingPartnerId;
-    private Long nonExistingPartnerId;
 
     @BeforeEach
     void setUp() throws Exception{
@@ -46,9 +45,8 @@ public class PersonServiceTests {
         existingPartnerId = 2L;
 
         nonExistingPersonId = 3L;
-        nonExistingPartnerId = 4L;
 
-        dependentId = 2L;
+        dependentId = 1L;
 
         person = PersonFactory.createPerson("João", "Maria");
 
@@ -57,6 +55,7 @@ public class PersonServiceTests {
         Mockito.when(personRepository.save(Mockito.any())).thenReturn(person);
 
         Mockito.when(personRepository.existsById(existingPersonId)).thenReturn(true);
+        Mockito.when(personRepository.existsById(existingPartnerId)).thenReturn(true);
         Mockito.when(personRepository.existsById(dependentId)).thenReturn(true);
         Mockito.when(personRepository.existsById(nonExistingPersonId)).thenReturn(false);
 
@@ -73,12 +72,28 @@ public class PersonServiceTests {
     }
 
     @Test
-    public void insertShouldReturnPersonDTO(){
+    public void insertShouldReturnPersonDTOWithPartnerWhenPersonDoHavePartner(){
+
         PersonDTO result = personService.insert(personDTO);
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals(result.getName(), personDTO.getName());
         Assertions.assertEquals(result.getPartner().getName(), personDTO.getPartner().getName());
+    }
+
+
+    @Test
+    public void insertShouldReturnPersonDTOWithPartnerNullWhenPersonDoesNotHavePartner(){
+        Person p = PersonFactory.createPerson("João");
+        PersonDTO dto = new PersonDTO(p);
+
+        Mockito.when(personRepository.save(Mockito.any())).thenReturn(p);
+
+        PersonDTO result = personService.insert(dto);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result.getName(), personDTO.getName());
+        Assertions.assertNull(result.getPartner());
     }
 
     @Test
@@ -91,7 +106,7 @@ public class PersonServiceTests {
     @Test
     public void deleteShouldDoNothingWhenIdExists(){
         Assertions.assertDoesNotThrow(() -> {
-            personService.delete(existingPersonId);
+            personService.delete(existingPartnerId);
         });
     }
 

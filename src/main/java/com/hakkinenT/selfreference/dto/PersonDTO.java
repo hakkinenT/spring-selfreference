@@ -5,12 +5,12 @@ import com.hakkinenT.selfreference.entities.Person;
 public class PersonDTO {
     private Long id;
     private String name;
-    private PersonDTO partner;
+    private PersonMinDTO partner;
 
     public PersonDTO() {
     }
 
-    public PersonDTO(Long id, String name, PersonDTO partner) {
+    public PersonDTO(Long id, String name, PersonMinDTO partner) {
         this.id = id;
         this.name = name;
         this.partner = partner;
@@ -19,7 +19,7 @@ public class PersonDTO {
     public PersonDTO(Person person) {
         this.id = person.getId();
         this.name = person.getName();
-        this.partner = person.getPartner() != null ? new PersonDTO(person.getPartner()) : null;
+        this.partner = person.getPartner() != null ? new PersonMinDTO(person.getPartner()) : null;
     }
 
     public Long getId() {
@@ -38,11 +38,11 @@ public class PersonDTO {
         this.name = name;
     }
 
-    public PersonDTO getPartner() {
+    public PersonMinDTO getPartner() {
         return partner;
     }
 
-    public void setPartner(PersonDTO partner) {
+    public void setPartner(PersonMinDTO partner) {
         this.partner = partner;
     }
 }
