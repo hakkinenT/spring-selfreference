@@ -63,9 +63,9 @@ public class PersonService {
     }
 
     @Transactional(readOnly = true)
-    public List<PersonDTO> findAllPartners(){
-        List<Person> person = personRepository.searchAllPartners();
-        return person.stream().map(PersonDTO::new).toList();
+    public PersonDTO findPersonPartner(Long id){
+        Person person = personRepository.searchPersonPartner(id).orElseThrow(() -> new ResourceNotFoundException("O recurso " + id + " não encontrado!"));
+        return new PersonDTO(person);
     }
 
     @Transactional

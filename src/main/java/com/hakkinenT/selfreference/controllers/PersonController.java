@@ -44,9 +44,9 @@ public class PersonController {
         return ResponseEntity.ok(person);
     }
 
-    @GetMapping("/partners")
-    public ResponseEntity<List<PersonDTO>> findAllPartners(){
-        List<PersonDTO> person = service.findAllPartners();
+    @GetMapping("{id}/partner")
+    public ResponseEntity<PersonDTO> findPersonPartner(@PathVariable Long id){
+        PersonDTO person = service.findPersonPartner(id);
         return ResponseEntity.ok(person);
     }
 
